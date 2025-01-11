@@ -1,5 +1,5 @@
 import { fileURLToPath, URL } from 'node:url'
-const publicPath = process.env.NODE_ENV === 'production' ? '/ypu/' : '/'
+const publicPath = process.env.NODE_ENV === 'production' ? '/academy_cdr/' : '/'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueDevTools from 'vite-plugin-vue-devtools'
