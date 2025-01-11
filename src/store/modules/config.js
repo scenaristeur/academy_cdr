@@ -7,16 +7,20 @@ const state = () => ({
   config: null,
   config_path: '../../../data/',
   default_aventure: 'first_aventure.json',
+  history: {},
   page: 0,
   level: 0,
 })
 
 const mutations = {
   setConfig(state, c) {
-    console.log
     state.config = c
   },
   setPage(state, p) {
+    console.log(state.config.id)
+
+    state.history[state.config.id].pages.push(p)
+    console.log(state.history)
     state.page = p
   },
   setLevel(state, l) {
@@ -39,6 +43,10 @@ const actions = {
       let config = await import(file)
       console.log('loaded', config)
       context.commit('setConfig', config.default)
+      context.state.history[context.state.config.id] = {}
+      context.state.history[context.state.config.id].pages =
+        context.state.history[context.state.config.id].pages || []
+      context.commit('setPage', 0)
       //app.load()
     } catch (e) {
       console.log(e)
