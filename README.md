@@ -2,11 +2,23 @@
 
 # creation des aventures
 
-- https://academy-cdr.solidcommunity.net/public/aventures/
+## choose your configs in /src/store/modules/config.js :
 
-- stockées dans ./data
-- la première aventure est ./data/first_aventure.json
+- local config, useful for developments : config_path: '../../data/first_aventure/',
+- revisions on github : config_path:'https://raw.githubusercontent.com/scenaristeur/academy_cdr/refs/heads/main/src/data/first_aventure/',
+- shared on Solid : config_path: 'https://academy-cdr.solidcommunity.net/public/aventures/first_aventure/',
+
+# tools
+
 - json validator https://jsonlint.com/
+
+---
+
+# bootstrap
+
+- https://stackoverflow.com/questions/65547199/using-bootstrap-5-with-vue-3
+
+---
 
 This template should help get you started developing with Vue 3 in Vite.
 
@@ -66,7 +78,3 @@ npm run test:e2e -- --debug
 ```sh
 npm run lint
 ```
-
-# bootstrap
-
-- https://stackoverflow.com/questions/65547199/using-bootstrap-5-with-vue-3

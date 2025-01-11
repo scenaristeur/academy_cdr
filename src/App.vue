@@ -11,8 +11,10 @@ import HelloWorld from "./components/HelloWorld.vue";
       <HelloWorld msg="L'academy CDR" />
 
       <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
+        <RouterLink to="/">Accueil</RouterLink>
+        <RouterLink to="/config">Config</RouterLink>
+        <RouterLink to="/editor">Editeur</RouterLink>
+        <RouterLink to="/about">A propos</RouterLink>
       </nav>
     </div>
   </header>
