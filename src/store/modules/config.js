@@ -5,7 +5,9 @@
 
 const state = () => ({
   config: null,
-  config_path: '../../data/first_aventure/',
+  // config_path: '../../data/first_aventure/',
+  config_path:
+    'https://raw.githubusercontent.com/scenaristeur/academy_cdr/refs/heads/main/data/first_aventure/',
   default_aventure: 'first_aventure.json',
   history: {},
   page: 0,
@@ -37,24 +39,34 @@ const actions = {
     console.log('load')
     // let config = await tools.loadJson(`./data/config/${page_number}.json`)
     // load actual config & page from profile (localstorage or db)
-    let file = context.state.config_path + context.state.default_aventure
-    console.log(file)
-    // if (page_number) {
-    //   file = `${page_number}.json`
-    // }
-    // let config = await tools.loadJson(file)
-    try {
-      let config = await import(file)
-      console.log('loaded', config)
-      context.commit('setConfig', config.default)
-      context.state.history[context.state.config.id] = {}
-      context.state.history[context.state.config.id].pages =
-        context.state.history[context.state.config.id].pages || []
-      context.commit('setPage', 0)
-      //app.load()
-    } catch (e) {
-      console.log(e)
+    let config = null
+    if (context.state.config_path.startsWith('http')) {
+      let file = context.state.config_path + context.state.default_aventure
+      console.log(file)
+      config = await fetch(file).then((response) => response.json())
+      console.log(config)
+      context.commit('setConfig', config)
+    } else {
+      let file = context.state.config_path + context.state.default_aventure
+      console.log(file)
+      // if (page_number) {
+      //   file = `${page_number}.json`
+      // }
+      // let config = await tools.loadJson(file)
+      try {
+        config = await import(file)
+        context.commit('setConfig', config.default)
+        //app.load()
+      } catch (e) {
+        console.log(e)
+      }
     }
+    console.log('loaded', config)
+
+    context.state.history[context.state.config.id] = {}
+    context.state.history[context.state.config.id].pages =
+      context.state.history[context.state.config.id].pages || []
+    context.commit('setPage', 0)
 
     // context.commit('setConfig', page_number)
   },
