@@ -1,43 +1,52 @@
 import { fileURLToPath, URL } from 'node:url'
-const publicPath = process.env.NODE_ENV === 'production' ? '/academy_cdr/' : '/'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueDevTools from 'vite-plugin-vue-devtools'
+import { VitePWA } from 'vite-plugin-pwa'
+const base = process.env.NODE_ENV === 'production' ? '/academy_cdr/' : '/'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: publicPath,
-  plugins: [vue(), vueDevTools()],
+  base: base,
+  plugins: [
+    vue(),
+    vueDevTools(),
+    VitePWA({
+      registerType: 'autoUpdate',
+      manifest: {
+        name: 'CDR Academy',
+        includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'mask-icon.svg'],
+        theme_color: '#ffffff',
+        icons: [
+          {
+            src: 'pwa-64x64.png',
+            sizes: '64x64',
+            type: 'image/png',
+          },
+          {
+            src: 'pwa-192x192.png',
+            sizes: '192x192',
+            type: 'image/png',
+          },
+          {
+            src: 'pwa-512x512.png',
+            sizes: '512x512',
+            type: 'image/png',
+            purpose: 'any',
+          },
+          {
+            src: 'maskable-icon-512x512.png',
+            sizes: '512x512',
+            type: 'image/png',
+            purpose: 'maskable',
+          },
+        ],
+      },
+    }),
+  ],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
-  },
-  pwa: {
-    name: 'CDR Academie',
-    // themeColor: '#4dbab5',
-    // msTileColor: '#000000',
-    appleMobileWebAppCapable: 'yes',
-    appleMobileWebAppStatusBarStyle: 'black',
-    manifestOptions: {
-      share_target: {
-        action: publicPath + 'share',
-        method: 'GET',
-        enctype: 'application/x-www-form-urlencoded',
-        params: {
-          title: 'title',
-          text: 'text',
-          url: 'url',
-        },
-      },
-    },
-
-    // configure the workbox plugin
-    /*  workboxPluginMode: 'InjectManifest',
-    workboxOptions: {
-    // swSrc is required in InjectManifest mode.
-    swSrc: 'src/registerServiceWorker.js',
-    // ...other Workbox options...
-  }*/
   },
 })
