@@ -6,8 +6,8 @@
 const state = () => ({
   config: null,
   // config_path: '../../data/first_aventure/',
-  config_path:
-    'https://raw.githubusercontent.com/scenaristeur/academy_cdr/refs/heads/main/data/first_aventure/',
+  // config_path:'https://raw.githubusercontent.com/scenaristeur/academy_cdr/refs/heads/main/data/first_aventure/',
+  config_path: 'https://academy-cdr.solidcommunity.net/public/aventures/first_aventure/',
   default_aventure: 'first_aventure.json',
   history: {},
   page: 0,

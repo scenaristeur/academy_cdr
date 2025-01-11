@@ -2,6 +2,8 @@
 
 # creation des aventures
 
+- https://academy-cdr.solidcommunity.net/public/aventures/
+
 - stockées dans ./data
 - la première aventure est ./data/first_aventure.json
 - json validator https://jsonlint.com/
