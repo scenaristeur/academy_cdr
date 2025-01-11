@@ -4,7 +4,7 @@
 
     <SolidLogin />
 
-    <div class="list-group" v-if="aventure == null">
+    <div class="list-group" v-if="aventure_url == null">
       <button
         v-for="aventure in aventures"
         v-bind:key="aventure.url"
@@ -17,18 +17,22 @@
     </div>
 
     <div v-else>
-      {{ aventure }}
+      <!-- {{ aventure_url }} -->
       <button class="btn btn-primary" v-on:click="choose(null)">return to list</button>
+
+      <EditorAventureView v-if="aventure_url != null" />
     </div>
   </div>
 </template>
 <script>
 import SolidLogin from "@/components/SolidLogin.vue";
+import EditorAventureView from "@/views/EditorAventureView.vue";
 
 export default {
   name: "EditorView",
   components: {
     SolidLogin,
+    EditorAventureView,
   },
   methods: {
     choose(url) {
@@ -54,8 +58,8 @@ export default {
     aventures() {
       return this.$store.state.solid_data.aventures;
     },
-    aventure() {
-      return this.$store.state.solid_data.aventure;
+    aventure_url() {
+      return this.$store.state.solid_data.aventure_url;
     },
   },
 };

@@ -6,14 +6,14 @@ import {
   //getSolidDatasetWithAcl,
   //getPublicAccess,
   //getAgentAccess,
-  // getFile,
-  // isRawData,
-  // getContentType,
+  getFile,
+  isRawData,
+  getContentType,
   //saveFileInContainer,
   // getContainedResourceUrlAll,
   // getStringNoLocaleAll,
   // createContainerAt,
-  // getSourceUrl,
+  getSourceUrl,
   // deleteFile,
   //removeThing,
   // removeAll,
@@ -51,6 +51,7 @@ const state = () => ({
   aventures: {},
   aventures_path: 'public/aventures',
   pod: null,
+  aventure_url: null,
   aventure: null,
 })
 
@@ -63,9 +64,13 @@ const mutations = {
     console.log('aventures', a)
     state.aventures = a
   },
+  setAventureUrl(state, a) {
+    console.log('aventure_url', a)
+    localStorage.setItem(LOCAL_STORAGE_KEY_LAST_AVENTURE, a)
+    state.aventure_url = a
+  },
   setAventure(state, a) {
     console.log('aventure', a)
-    localStorage.setItem(LOCAL_STORAGE_KEY_LAST_AVENTURE, a)
     state.aventure = a
   },
   // updateDoc(state, newDoc) {
@@ -75,8 +80,25 @@ const mutations = {
 }
 
 const actions = {
+  async loadAventure(context, url = context.state.aventure_url) {
+    try {
+      // File (https://docs.inrupt.com/developer-tools/api/javascript/solid-client/modules/interfaces.html#file) is a Blob (see https://developer.mozilla.org/docs/Web/API/Blob)
+      const file = await getFile(
+        url, // File in Pod to Read
+        { fetch: fetch }, // fetch from authenticated session
+      )
+      // console.log(file)
+      let text = await file.text()
+      // console.log(text)
+      context.commit('setAventure', JSON.parse(text))
+      // console.log(`Fetched a ${getContentType(file)} file from ${getSourceUrl(file)}.`)
+      // console.log(`The file is ${isRawData(file) ? 'not ' : ''}a dataset.`)
+    } catch (err) {
+      console.log(err)
+    }
+  },
   async chooseAventure(context, url) {
-    context.commit('setAventure', url)
+    context.commit('setAventureUrl', url)
   },
 
   async getAventures(context, session) {
@@ -100,7 +122,7 @@ const actions = {
     context.commit('setAventures', avs)
     const last_aventure = localStorage.getItem(LOCAL_STORAGE_KEY_LAST_AVENTURE)
     if (last_aventure) {
-      context.commit('setAventure', last_aventure)
+      context.commit('setAventureUrl', last_aventure)
     }
   },
   async getPodInfos(context, pod) {
