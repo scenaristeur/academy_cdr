@@ -1,6 +1,12 @@
 <template>
   <div class="about">
     <h1>This is an about page</h1>
+    <a
+      href="https://github.com/scenaristeur/academy_cdr/blob/main/README.md"
+      target="_blank"
+      rel="noopener"
+      >More infos</a
+    >.
   </div>
 </template>
 
