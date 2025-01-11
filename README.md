@@ -1,5 +1,11 @@
 # academy_cdr
 
+# creation des aventures
+
+- stockées dans ./data
+- la première aventure est ./data/first_aventure.json
+- json validator https://jsonlint.com/
+
 This template should help get you started developing with Vue 3 in Vite.
 
 ## Recommended IDE Setup

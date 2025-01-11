@@ -1,0 +1,124 @@
+{
+    "id": "first_aventure",
+    "name": "Le Monde Numérique",
+    "description": "Prêt à rejoindre les rangs de l'Académie du Château des Robots pour découvrir le Monde Numérique et apprendre toutes ses ficelles ?",
+    "pages": {
+        "0": {
+            "level": 0,
+            "title": "Bienvenue au Château des Robots",
+            "content": [
+                "Bonjour jeune explorateur, j'espère que tu n'est pas ici par hasard, mais que tu souhaites te préparer pour rejoindre un équipage et partir à la découverte du Monde Numérique.",
+                "Il y a évidement plusieurs manières de découvrir le Monde Numérique, et l'académie du Château des Robots n'est évidemment pas la seule...",
+                "Mais elle a fait ses preuves et est déjà reconnue par de nombreux explorateus...",
+                "",
+                "Pour entrer au Château des Robots, tu vas devoir faire preuve de concentration et de perspicacité.",
+                "Je suis là poiur t'aider, mais ça sera à toi de mener ta propre aventure d'apprentissage avant de rejoindre la Vraie Aventure",
+                "Car le meilleur moyen pour être recruté par un équipage est de montrer tes compétences à l'entrainement.",
+                "Alors c'est parti.",
+                "",
+                "Commence par répondre à la question suivante afin d'évaluer ton niveau de développement Web.",
+                "Sois honnête avec toi-même, une sur-évaluation te mettra en difficulté, une sous-évaluation risque de t'ennuyer, mais c'est peut-être moins grave..."
+            ],
+            "choices": [
+                {
+                    "text": "Je n'ai jamais créé de page Web",
+                    "description": "Rejoins TimBL pour découvrir l'histoire du Web et la création de page Web",
+                    "page": 1
+                },
+                {
+                    "text": "J'ai déjà rencontré le HTML, mais je confonds encore JavaScript et Java",
+                    "page": 2,
+                    "description": "Alors que les premières pages Web sont apparus de nouveaux besoins se sont fait sentir : les mettre en forme et leur ajouter des interactions avec JavaScript"
+                },
+                {
+                    "text": "Je maîtrise JavaScript mais pas vraiment NodeJS et souhaite découvrir des frameworks",
+                    "page": 3,
+                    "description": "J'y vais dans l'espace",
+                    "active": false
+                },
+                {
+                    "text": "J'ai déjà pratiqué plusieurs framework JScomme React ou VueJs'",
+                    "page": 4,
+                    "description": "J'y vais dans l'espace",
+                    "active": false
+                }
+            ]
+        },
+        "1": {
+            "level": 0,
+            "title": "L'antre de TimBL",
+            "content": [
+                "Salut, je suis TimBL, il parait que c'est moi qui ai inventé le Web.",
+                "En fait, à l'époque, en 1989, je souhaiter surtout améliorer la façon dont je travaillais au CERN, et partager plus facilement mes documents de travail avec mes collègues.",
+                "Et très vite, je me suis dit que ce que je tentais de mettre en place pouvait être utile à d'autres, alors j'ai choisis de paratager, et de rendre mes travaux accessibles librement.",
+                "Ca n'a pas toujours été très simple, mais j'ai pu y arriver...",
+                "Alors toi aussi certainement, tu pourras y arriver !",
+                {
+                    "type": "lien",
+                    "texte": "TimBL",
+                    "href": "https://fr.wikipedia.org/wiki/Tim_Berners-Lee"
+                },
+                "Si tu veux voir à quoi ressemblait le premier site web, tu peux cliquer sur le lien ci-dessus.",
+                {
+                    "type": "lien",
+                    "texte": "Premier site Web",
+                    "href": "http://info.cern.ch/"
+                },
+                "Bon evidemment, ça ne va pas plaire à tout le monde, c'est pas très coloré, et on peut rien faire d'autre que lire, et basculer d'une page à l'autre.",
+                "Mais il faut bien commencer "{
+                    "type": "media",
+                    "legend": "clic droit sur la page d'accueil du premier site web",
+                    "src": "https://www.youtube.com/watch?v=JGwWNGJdvx8"
+                },
+                "Pour commencer, il va te falloir quelques outils"
+            ],
+            "choices": [
+                {
+                    "text": "Un page Web, c'est un fichier texte",
+                    "page": 5,
+                    "active": false
+                },
+                {
+                    "text": "Le langage HTML, le 'squellette' d'une page Web",
+                    "page": 6,
+                    "active": false
+                },
+                {
+                    "text": "Le CSS, le 'costume' de la page Web",
+                    "page": 5,
+                    "active": false
+                },
+                {
+                    "text": "Le JavaScript, pour gérer les interactions de la page Web (actions, boutons...)",
+                    "page": 5,
+                    "active": false
+                }
+            ]
+        },
+        "2": {
+            "level": 0,
+            "title": "Le HTML, ça te parle, alors... mais le CSS et le JavaScript, pas trop ?",
+            "content": [
+                "Déjà, la première erreur à ne pas commettre, c'est de confondre Java et Javascript, ce sont deux languages de programmation totalement différents, et nous ne nous occuperons ici que du JavaScript.",
+                "Le Java, c'est autre chose dont on ne parlera pas ici, par contre, si tu veux faire le pro et raccourcie JavaScript, tu peux dire 'JS', ou pour les encore plus pros, du 'Vanilla'.",
+                {
+                    "type": "lien",
+                    "texte": "Java",
+                    "href": "https://fr.wikipedia.org/wiki/Java_(langage)"
+                },
+                {
+                    "type": "lien",
+                    "texte": "JavaScript",
+                    "href": "https://fr.wikipedia.org/wiki/JavaScript"
+                },
+                {
+                    "type": "lien",
+                    "texte": "Vanilla",
+                    "href": "https://openclassrooms.com/forum/sujet/vanilla-js-qu-est-ce-que-c-est-exactement"
+                },
+                "C'est parti !"
+            ],
+            "choices": []
+        }
+    }
+}

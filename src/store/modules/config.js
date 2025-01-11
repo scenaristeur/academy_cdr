@@ -5,7 +5,7 @@
 
 const state = () => ({
   config: null,
-  config_path: '../../../data/',
+  config_path: '../../../data/first_aventure/',
   default_aventure: 'first_aventure.json',
   history: {},
   page: 0,
@@ -25,6 +25,10 @@ const mutations = {
   },
   setLevel(state, l) {
     state.level = l
+  },
+  goBack(state) {
+    state.history[state.config.id].pages.slice(-2)[0]
+    this.commit('config/setPage', state.history[state.config.id].pages.slice(-2)[0])
   },
 }
 

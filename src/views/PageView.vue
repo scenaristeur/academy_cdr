@@ -1,12 +1,22 @@
 <template>
-  <div class="page" v-if="config != null">
+  <div class="page" v-if="config != null" ref="page">
     <h1>{{ config.name }}</h1>
+    <p v-if="page == 0">{{ config.description }}</p>
     page : {{ page }}, level {{ level }}
     <div v-if="page_data != undefined">
-      <p>{{ page_data.title }}</p>
+      <h2>{{ page_data.title }}</h2>
       <hr />
 
-      <div v-for="part in page_data.text" v-bind:key="part">{{ part }}</div>
+      <div v-for="content_part in page_data.content" v-bind:key="content_part">
+        <div v-if="typeof content_part == 'object'">
+          <div v-if="content_part.type == 'lien'">
+            <a :href="content_part.href" target="_blank">{{ content_part.texte }}</a>
+          </div>
+        </div>
+        <div v-else>
+          {{ content_part }}
+        </div>
+      </div>
 
       <hr />
 
@@ -17,8 +27,13 @@
           v-on:click="choose(choice)"
           type="button"
           class="list-group-item list-group-item-action list-group-item-primary"
+          :disabled="choice.active == false"
         >
-          {{ choice.text }}
+          <b>{{ choice.text }}</b> <br /><small
+            ><span>{{ choice.description }}</span></small
+          >
+          <br />
+          -> rends-toi à la page {{ choice.page }}
         </button>
       </div>
     </div>
@@ -29,6 +44,14 @@
           >contactez l'administrateur</a
         >
       </p>
+    </div>
+    <div>
+      <hr />
+      <div>
+        <button class="btn btn-primary" v-on:click="goBack">Retour</button>
+      </div>
+      <button class="btn btn-primary" v-on:click="restart">Recommencer l'aventure</button>
+      <button class="btn btn-primary" v-on:click="change">Changer d'aventure</button>
     </div>
   </div>
 </template>
@@ -43,10 +66,22 @@ export default {
   //   console.log(this.page_number)
   //   this.$store.dispatch('config/loadConfig', this.page_number)
   // }
+  updated() {
+    this.$refs.page.scrollIntoView();
+  },
   methods: {
     choose(choice) {
       console.log(choice);
       this.$store.commit("config/setPage", choice.page);
+    },
+    restart() {
+      this.$store.commit("config/setPage", 0);
+    },
+    change() {
+      this.$store.commit("config/changeAventure");
+    },
+    goBack() {
+      this.$store.commit("config/goBack");
     },
   },
   computed: {
