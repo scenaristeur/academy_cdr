@@ -87,27 +87,29 @@ const actions = {
     console.log(filename)
     const savedFile = await overwriteFile(
       aventure.url,
-      new File([JSON.stringify(aventure)], filename, { type: 'application/json' }),
+      new File([JSON.stringify(aventure, null, 2)], filename, { type: 'application/json' }),
       { fetch: sc.fetch },
     )
 
     console.log(savedFile)
   },
   async loadAventure(context, url = context.state.aventure_url) {
-    try {
-      // File (https://docs.inrupt.com/developer-tools/api/javascript/solid-client/modules/interfaces.html#file) is a Blob (see https://developer.mozilla.org/docs/Web/API/Blob)
-      const file = await getFile(
-        url, // File in Pod to Read
-        { fetch: sc.fetch }, // fetch from authenticated session
-      )
-      // console.log(file)
-      let text = await file.text()
-      // console.log(text)
-      context.commit('setAventure', JSON.parse(text))
-      console.log(`Fetched a ${getContentType(file)} file from ${getSourceUrl(file)}.`)
-      // console.log(`The file is ${isRawData(file) ? 'not ' : ''}a dataset.`)
-    } catch (err) {
-      console.log(err)
+    if (url != null) {
+      try {
+        // File (https://docs.inrupt.com/developer-tools/api/javascript/solid-client/modules/interfaces.html#file) is a Blob (see https://developer.mozilla.org/docs/Web/API/Blob)
+        const file = await getFile(
+          url, // File in Pod to Read
+          { fetch: sc.fetch }, // fetch from authenticated session
+        )
+        // console.log(file)
+        let text = await file.text()
+        // console.log(text)
+        context.commit('setAventure', JSON.parse(text))
+        console.log(`Fetched a ${getContentType(file)} file from ${getSourceUrl(file)}.`)
+        // console.log(`The file is ${isRawData(file) ? 'not ' : ''}a dataset.`)
+      } catch (err) {
+        console.log(err)
+      }
     }
   },
   async chooseAventure(context, url) {

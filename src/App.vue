@@ -22,7 +22,13 @@ import HelloWorld from "./components/HelloWorld.vue";
   <RouterView />
 </template>
 
-<style scoped>
+<style>
+body {
+  --bs-body-font-family: var(--bs-font-monospace);
+  --bs-body-line-height: 1.4;
+  --bs-body-bg: var(--bs-gray-100);
+}
+
 header {
   line-height: 1.5;
   max-height: 100vh;
