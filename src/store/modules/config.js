@@ -5,7 +5,7 @@
 
 const state = () => ({
   config: null,
-  config_path: '../../../data/first_aventure/',
+  config_path: '../../data/first_aventure/',
   default_aventure: 'first_aventure.json',
   history: {},
   page: 0,
