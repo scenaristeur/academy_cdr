@@ -26,14 +26,14 @@ export default {
         version: "1.0.0",
         type: "object",
         properties: {
+          url: {
+            type: "string",
+          },
           name: {
             type: "string",
           },
           description: {
             type: "textarea",
-          },
-          url: {
-            type: "string",
           },
           style: {
             type: "string",
@@ -50,6 +50,7 @@ export default {
           },
           pages: {
             type: "array",
+            classe: "page",
             items: {
               type: "string",
             },
@@ -63,9 +64,14 @@ export default {
     CrudView,
   },
   mounted() {
-    if (this.pod && this.pod.name) {
-      this.aventure_schema.properties.author.default = this.pod.name;
-    }
+    this.setAuthor();
+  },
+  methods: {
+    setAuthor() {
+      if (this.pod && this.pod.name) {
+        this.aventure_schema.properties.author.default = this.pod.name;
+      }
+    },
   },
   watch: {
     session() {
@@ -76,9 +82,7 @@ export default {
       }
     },
     pod() {
-      if (this.pod && this.pod.name) {
-        this.aventure_schema.properties.author.default = this.pod.name;
-      }
+      this.setAuthor();
     },
   },
   computed: {
