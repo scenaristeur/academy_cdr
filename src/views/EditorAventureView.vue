@@ -45,7 +45,7 @@
     <div class="list-group">
       <button
         v-for="page in aventure.pages"
-        v-bind:key="page"
+        v-bind:key="page.id"
         v-on:click="clickpage(page)"
         type="button"
         class="list-group-item list-group-item-action list-group-item-primary"
@@ -87,22 +87,6 @@
       />
     </div>
 
-    <div class="form-group">
-      <label for="page_content">Contenu de la page</label>
-      <input
-        class="form-control"
-        id="page_content"
-        placeholder="contenu"
-        v-model="current_page.content"
-        v-on:keyup.enter="updatePage"
-      />
-      <small id="contentHelp" class="form-text text-muted"
-        >ajouter un
-        <button class="btn btn-primary btn-sm">texte</button>
-        <button class="btn btn-primary btn-sm">lien</button>
-        <button class="btn btn-primary btn-sm">media</button>
-      </small>
-    </div>
     <!-- Button trigger modal -->
     <button
       type="button"
@@ -110,7 +94,7 @@
       data-bs-toggle="modal"
       data-bs-target="#contentModal"
     >
-      Launch content modal
+      Contenu de la page
     </button>
 
     <div class="form-group">
@@ -122,14 +106,14 @@
         v-model="current_page.choices"
         v-on:keyup.enter="updatePage"
       />
-      <button class="btn btn-primary btn-sm">ajouter un choix</button>
+
       <button
         type="button"
-        class="btn btn-primary"
+        class="btn btn-primary btn-sm"
         data-bs-toggle="modal"
         data-bs-target="#choicesModal"
       >
-        Launch choices modal
+        ajouter un choix
       </button>
     </div>
 
@@ -146,7 +130,7 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h1 class="modal-title fs-5" id="contentModalLabel">Content Modal title</h1>
+            <h1 class="modal-title fs-5" id="contentModalLabel">Contenu de la page</h1>
             <button
               type="button"
               class="btn-close"
@@ -154,12 +138,38 @@
               aria-label="Close"
             ></button>
           </div>
-          <div class="modal-body">...</div>
+          <div class="modal-body">
+            <small id="contentHelp" class="form-text text-muted"
+              >ajouter un
+              <button class="btn btn-primary btn-sm" v-on:click="addPart('texte')">
+                texte
+              </button>
+              <button class="btn btn-primary btn-sm" v-on:click="addPart('lien')">
+                lien
+              </button>
+              <button class="btn btn-primary btn-sm" v-on:click="addPart('media')">
+                media
+              </button>
+            </small>
+          </div>
+
+          <div class="list-group">
+            <button
+              v-for="part in current_page.content"
+              v-bind:key="part"
+              v-on:click="select_part(part)"
+              type="button"
+              class="list-group-item list-group-item-action list-group-item-primary"
+            >
+              {{ part }}
+            </button>
+          </div>
+
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-              Close
+              Fermer
             </button>
-            <button type="button" class="btn btn-primary">Save changes</button>
+            <button type="button" class="btn btn-primary">Enregistrer le contenu</button>
           </div>
         </div>
       </div>
@@ -216,6 +226,19 @@ export default {
     // this.current_page = this.default_current_page;
   },
   methods: {
+    addPart(type) {
+      switch (type) {
+        case "texte":
+          this.current_page.content.push("texte");
+          break;
+        case "lien":
+          this.current_page.content.push("lien");
+          break;
+        case "media":
+          this.current_page.content.push("media");
+          break;
+      }
+    },
     enregistrer() {
       console.log("enregistrer", this.aventure);
       this.aventure.url = this.aventure_url;

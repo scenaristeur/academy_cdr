@@ -32,8 +32,8 @@
           <b>{{ choice.text }}</b> <br /><small
             ><span>{{ choice.description }}</span></small
           >
-          <br />
-          -> rends-toi à la page {{ choice.page }}
+          <!-- <br />
+          -> rends-toi à la page {{ choice.page }} -->
         </button>
       </div>
     </div>
