@@ -49,7 +49,7 @@ const LOCAL_STORAGE_KEY_LAST_AVENTURE = 'academy_editor_last_aventure'
 const state = () => ({
   // doc: null
   aventures: {},
-  aventures_path: 'public/aventures',
+  aventures_path: 'public/cdr_academie/',
   pod: null,
   aventure_url: null,
   aventure: null,
@@ -80,65 +80,65 @@ const mutations = {
 }
 
 const actions = {
-  async saveAventure(context, aventure) {
-    context.commit('setAventure', aventure)
-    console.log(aventure)
-    let filename = aventure.url.replace(context.state.pod.aventureStore, '').replace('/', '')
-    console.log(filename)
-    const savedFile = await overwriteFile(
-      aventure.url,
-      new File([JSON.stringify(aventure, null, 2)], filename, { type: 'application/json' }),
-      { fetch: sc.fetch },
-    )
+  // async saveAventure(context, aventure) {
+  //   context.commit('setAventure', aventure)
+  //   console.log(aventure)
+  //   let filename = aventure.url.replace(context.state.pod.aventureStore, '')
+  //   console.log(filename)
+  //   const savedFile = await overwriteFile(
+  //     aventure.url,
+  //     new File([JSON.stringify(aventure, null, 2)], filename, { type: 'application/json' }),
+  //     { fetch: sc.fetch },
+  //   )
 
-    console.log(savedFile)
-  },
-  async loadAventure(context, url = context.state.aventure_url) {
-    if (url != null) {
-      try {
-        // File (https://docs.inrupt.com/developer-tools/api/javascript/solid-client/modules/interfaces.html#file) is a Blob (see https://developer.mozilla.org/docs/Web/API/Blob)
-        const file = await getFile(
-          url, // File in Pod to Read
-          { fetch: sc.fetch }, // fetch from authenticated session
-        )
-        // console.log(file)
-        let text = await file.text()
-        // console.log(text)
-        context.commit('setAventure', JSON.parse(text))
-        console.log(`Fetched a ${getContentType(file)} file from ${getSourceUrl(file)}.`)
-        // console.log(`The file is ${isRawData(file) ? 'not ' : ''}a dataset.`)
-      } catch (err) {
-        console.log(err)
-      }
-    }
-  },
-  async chooseAventure(context, url) {
-    context.commit('setAventureUrl', url)
-  },
+  //   console.log(savedFile)
+  // },
+  // async loadAventure(context, url = context.state.aventure_url) {
+  //   if (url != null) {
+  //     try {
+  //       // File (https://docs.inrupt.com/developer-tools/api/javascript/solid-client/modules/interfaces.html#file) is a Blob (see https://developer.mozilla.org/docs/Web/API/Blob)
+  //       const file = await getFile(
+  //         url, // File in Pod to Read
+  //         { fetch: sc.fetch }, // fetch from authenticated session
+  //       )
+  //       // console.log(file)
+  //       let text = await file.text()
+  //       // console.log(text)
+  //       context.commit('setAventure', JSON.parse(text))
+  //       console.log(`Fetched a ${getContentType(file)} file from ${getSourceUrl(file)}.`)
+  //       // console.log(`The file is ${isRawData(file) ? 'not ' : ''}a dataset.`)
+  //     } catch (err) {
+  //       console.log(err)
+  //     }
+  //   }
+  // },
+  // async chooseAventure(context, url) {
+  //   context.commit('setAventureUrl', url)
+  // },
 
-  async getAventures(context, session) {
-    console.log('getAventures', session)
+  async getPod(context, session) {
+    console.log('getPod', session)
     let pod = await context.dispatch('getPodInfos', session) //this.$getPodInfosFromSession(session)
     console.log('pod', pod)
     context.commit('setPod', pod)
-    const aventuresContainer = await getSolidDataset(pod.aventureStore, { fetch: sc.fetch })
-    let aventures = await getThingAll(aventuresContainer, { fetch: sc.fetch })
-    console.log('aventures', aventures)
-    aventures = aventures.filter((aventure) => {
-      return aventure.url.endsWith('.json')
-    })
-    let avs = aventures.map((aventure) => {
-      let ave = {}
-      ave.name = decodeURI(aventure.url.replace(pod.aventureStore, '').replace('.json', ''))
-      ave.data = aventure
-      return ave
-    })
-    console.log('aventures graph', avs)
-    context.commit('setAventures', avs)
-    const last_aventure = localStorage.getItem(LOCAL_STORAGE_KEY_LAST_AVENTURE)
-    if (last_aventure) {
-      context.commit('setAventureUrl', last_aventure)
-    }
+    // const aventuresContainer = await getSolidDataset(pod.aventureStore, { fetch: sc.fetch })
+    // let aventures = await getThingAll(aventuresContainer, { fetch: sc.fetch })
+    // console.log('aventures', aventures)
+    // aventures = aventures.filter((aventure) => {
+    //   return aventure.url.endsWith('.json')
+    // })
+    // let avs = aventures.map((aventure) => {
+    //   let ave = {}
+    //   ave.name = decodeURI(aventure.url.replace(pod.aventureStore, '').replace('.json', ''))
+    //   ave.data = aventure
+    //   return ave
+    // })
+    // console.log('aventures graph', avs)
+    // context.commit('setAventures', avs)
+    // const last_aventure = localStorage.getItem(LOCAL_STORAGE_KEY_LAST_AVENTURE)
+    // if (last_aventure) {
+    //   context.commit('setAventureUrl', last_aventure)
+    // }
   },
   async getPodInfos(context, pod) {
     try {

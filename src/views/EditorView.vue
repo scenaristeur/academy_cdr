@@ -20,19 +20,21 @@
       <!-- {{ aventure_url }} -->
       <button class="btn btn-primary" v-on:click="choose(null)">return to list</button>
 
-      <EditorAventureView v-if="aventure_url != null" />
+      <RouterLink to="/crudaventure">CRUD Aventure</RouterLink>
+      <!-- <EditorAventureView v-if="aventure_url != null" /> -->
     </div>
   </div>
 </template>
 <script>
 import SolidLogin from "@/components/SolidLogin.vue";
-import EditorAventureView from "@/views/EditorAventureView.vue";
+
+// import EditorAventureView from "@/views/EditorAventureView.vue";
 
 export default {
   name: "EditorView",
   components: {
     SolidLogin,
-    EditorAventureView,
+    // EditorAventureView,
   },
   methods: {
     choose(url) {

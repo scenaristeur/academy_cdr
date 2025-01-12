@@ -23,7 +23,23 @@ const router = createRouter({
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import('../views/EditorView.vue'),
+      component: () => import('../views/AventuresView.vue'),
+    },
+    // {
+    //   path: '/crudaventure',
+    //   name: 'crudaventure',
+    //   // route level code-splitting
+    //   // this generates a separate chunk (About.[hash].js) for this route
+    //   // which is lazy-loaded when the route is visited.
+    //   component: () => import('../views/CrudAventure.vue'),
+    // },
+    {
+      path: '/config',
+      name: 'config',
+      // route level code-splitting
+      // this generates a separate chunk (About.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import('../views/ConfigView.vue'),
     },
   ],
 })
