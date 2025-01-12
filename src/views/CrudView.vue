@@ -10,18 +10,21 @@
     READ: LIST, DEtail, Update CREATE NEW, = UPDATE with NULL DELETE
 
     <hr />
-    {{ aventure }}
+    <CrudList :things="aventure" :type="type" />
+    <!-- {{ aventure }} -->
   </div>
 </template>
 
 <script>
 import CrudForm from "./CrudForm.vue";
+import CrudList from "./CrudList.vue";
 
 export default {
   name: "CrudView",
   props: ["type", "path", "schema"],
   components: {
     CrudForm,
+    CrudList,
   },
   created() {
     this.readContainer();

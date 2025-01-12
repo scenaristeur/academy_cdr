@@ -8,6 +8,11 @@
 - revisions on github : config_path:'https://raw.githubusercontent.com/scenaristeur/academy_cdr/refs/heads/main/src/data/first_aventure/',
 - shared on Solid : config_path: 'https://academy-cdr.solidcommunity.net/public/aventures/first_aventure/',
 
+update :
+
+- Solid : https://academy-cdr.solidcommunity.net/public/cdr_academie/
+- academy-cdr
+
 # tools
 
 - json validator https://jsonlint.com/
@@ -17,6 +22,10 @@
 # bootstrap
 
 - https://stackoverflow.com/questions/65547199/using-bootstrap-5-with-vue-3
+
+# Solid get values
+
+- https://docs.inrupt.com/developer-tools/javascript/client-libraries/tutorial/read-write-data/#read-data-attribute-of-a-thing
 
 ---
 

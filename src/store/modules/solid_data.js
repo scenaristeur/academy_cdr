@@ -8,13 +8,14 @@ import {
   //getAgentAccess,
   getFile,
   // isRawData,
-  getContentType,
+  // getContentType,
   // saveFileInContainer,
   // getContainedResourceUrlAll,
   // getStringNoLocaleAll,
   // createContainerAt,
-  getSourceUrl,
-  // deleteFile,
+  // getSourceUrl,
+  // getLiteralAll,
+  deleteFile,
   //removeThing,
   // removeAll,
   //removeStringNoLocale,
@@ -32,7 +33,8 @@ import {
   getUrlAll,
   getUrl,
   //addDatetime,
-  //  getDatetime,
+  // getDatetime,
+  getDecimal,
   //setUrl,
   //setStringNoLocale,
   //setDecimal,
@@ -49,8 +51,10 @@ const LOCAL_STORAGE_KEY_LAST_AVENTURE = 'academy_editor_last_aventure'
 const state = () => ({
   aventures_path: 'public/cdr_academie/',
   pod: null,
-  current: null,
+  currentThing: null,
   aventure: null,
+  path: null,
+  type: null,
 })
 
 const mutations = {
@@ -58,10 +62,10 @@ const mutations = {
     console.log('pod', p)
     state.pod = p
   },
-  setCurrent(state, c) {
-    state.current = c
+  setCurrentThing(state, c) {
+    state.currentThing = c
   },
-  setThings(state, { things, type }) {
+  async setThings(state, { things, type }) {
     state[type] = things
     console.log(state)
   },
@@ -80,7 +84,6 @@ const actions = {
       )
 
       console.log(savedFile)
-      context.commit('setCurrent', data.url)
       context.dispatch('crudReadContainer', { path: data.path, type: data.type })
       alert('Saved ' + data.url)
     } catch (e) {
@@ -91,10 +94,42 @@ const actions = {
 
   async crudReadContainer(context, data) {
     console.log('crudReadContainer', data)
-    let container_ds = await getSolidDataset(data.path, { fetch: sc.fetch })
-    let things = await getThingAll(container_ds)
-    context.commit('setThings', { things: things, type: data.type })
-    console.log(things)
+    try {
+      context.state.path = data.path
+      context.state.type = data.type
+      let container_ds = await getSolidDataset(data.path, { fetch: sc.fetch })
+      let things = await getThingAll(container_ds)
+
+      let type_state = context.state[data.type] || {}
+      let content = null
+      for (const thing of things) {
+        if (!thing.url.endsWith('/')) {
+          // https://docs.inrupt.com/developer-tools/javascript/client-libraries/tutorial/read-write-data/#read-data-attribute-of-a-thing
+          let mtime = await getDecimal(thing, 'http://www.w3.org/ns/posix/stat#mtime')
+          console.log(thing.url, mtime)
+          let old = type_state[thing.url]
+          if (old == null || old.mtime < mtime) {
+            if (thing.url.endsWith('.json')) {
+              const file = await getFile(
+                thing.url, // File in Pod to Read
+                { fetch: sc.fetch }, // fetch from authenticated session
+              )
+              // console.log(file)
+              let text = await file.text()
+              // console.log(text)
+              content = JSON.parse(text)
+            }
+
+            type_state[thing.url] = { url: thing.url, mtime: mtime, content: content }
+          }
+        }
+      }
+
+      context.commit('setThings', { things: type_state, type: data.type })
+      console.log(type_state)
+    } catch (e) {
+      console.log(e)
+    }
   },
 
   async getPod(context, session) {
@@ -126,6 +161,18 @@ const actions = {
     }
     console.log(pod)
     return await pod
+  },
+
+  async deleteThing(context, thing) {
+    console.log(thing)
+    try {
+      await deleteFile(thing.url, { fetch: sc.fetch })
+      delete context.state[context.state.type][thing.url]
+    } catch (e) {
+      console.log(e)
+    }
+
+    context.dispatch('crudReadContainer', { path: context.state.path, type: context.state.type })
   },
 }
 

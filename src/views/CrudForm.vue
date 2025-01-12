@@ -5,7 +5,8 @@
       type="button"
       class="btn btn-primary"
       data-bs-toggle="modal"
-      :data-bs-target="'#' + type + 'ModalLabel'"
+      :data-bs-target="'#' + type + 'Modal'"
+      v-on:click="resetThing"
     >
       Edition {{ type }}
     </button>
@@ -13,7 +14,7 @@
     <!-- Modal -->
     <div
       class="modal fade"
-      :id="type + 'ModalLabel'"
+      :id="type + 'Modal'"
       tabindex="-1"
       aria-labelledby="exampleModalLabel"
       aria-hidden="true"
@@ -80,19 +81,36 @@ export default {
     };
   },
   mounted() {
-    this.result.path = this.path + this.type + "/";
-    this.result.url = this.result.path + uuidv4() + ".json";
-    for (const property in this.properties) {
-      if (this.properties[property].default) {
-        this.result[property] = this.properties[property].default;
-      }
-    }
+    this.resetThing();
   },
   methods: {
+    resetThing() {
+      this.$store.commit("solid_data/setCurrentThing", null);
+      this.result = {};
+      this.result.path = this.path + this.type + "/";
+      this.result.url = this.result.path + uuidv4() + ".json";
+      for (const property in this.properties) {
+        if (this.properties[property].default) {
+          this.result[property] = this.properties[property].default;
+        }
+      }
+    },
     save() {
       this.result.type = this.type;
       console.log("save", this.result);
       this.$store.dispatch("solid_data/crudSave", this.result);
+    },
+  },
+  watch: {
+    currentThing() {
+      if (this.currentThing != null) {
+        this.result = this.currentThing.content;
+      }
+    },
+  },
+  computed: {
+    currentThing() {
+      return this.$store.state.solid_data.currentThing;
     },
   },
 };
