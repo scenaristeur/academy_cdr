@@ -8,11 +8,16 @@
       class="list-group-item list-group-item-action list-group-item-primary"
     >
       {{ thing.content.name }}
-      <button class="btn btn-primary btn-sm" @click.stop="pages(thing)">pages</button>
-      <button class="btn btn-primary btn-sm" @click.stop="choix(thing)">choix</button>
-      <div v-for="(property, key) in properties" v-bind:key="key">
-        <div v-if="property.type === 'array'">{{ key }} : {{ property }}</div>
-      </div>
+
+      <span v-for="(property, key) in properties" v-bind:key="key">
+        <button
+          v-if="property.type === 'array'"
+          class="btn btn-primary btn-sm"
+          @click.stop="sub({ key: key, thing: thing })"
+        >
+          {{ key }}
+        </button>
+      </span>
       <button class="btn btn-danger btn-sm" @click.stop="supprime(thing)">X</button>
     </button>
   </div>
@@ -24,16 +29,12 @@ export default {
   name: "CrudList",
   props: ["things", "type", "properties"],
   methods: {
-    pages(thing) {
+    sub({ key, thing }) {
       this.setCurrent(thing);
       console.log("pages", thing);
-      this.$router.push({ name: "pages" });
+      this.$router.push({ name: key });
     },
-    choix(thing) {
-      this.setCurrent(thing);
-      console.log("choix", thing);
-      this.$router.push({ name: "choix" });
-    },
+
     supprime(thing) {
       let confirme = confirm("Supprimer " + thing.url + " ?");
       if (confirme) {

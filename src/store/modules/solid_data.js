@@ -73,20 +73,20 @@ const mutations = {
 }
 
 const actions = {
-  async crudSave(context, data) {
+  async crudSave(context, { parent, thing }) {
     try {
-      console.log(data)
+      console.log('saving', thing, parent)
       // let filename = data.url.replace(context.state.pod.aventureStore, '')
       // console.log(filename)
       const savedFile = await overwriteFile(
-        data.url,
-        new File([JSON.stringify(data, null, 2)], data.name, { type: 'application/json' }),
+        thing.url,
+        new File([JSON.stringify(thing, null, 2)], thing.name, { type: 'application/json' }),
         { fetch: sc.fetch },
       )
 
       console.log(savedFile)
-      context.dispatch('crudReadContainer', { path: data.path, type: data.type })
-      alert('Saved ' + data.url)
+      context.dispatch('crudReadContainer', { path: thing.path, type: thing.type })
+      alert('Saved ' + thing.url)
     } catch (e) {
       console.log(e)
       alert(e)

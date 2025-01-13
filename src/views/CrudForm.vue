@@ -74,7 +74,7 @@
 import { v4 as uuidv4 } from "uuid";
 export default {
   name: "CrudForm",
-  props: ["properties", "path", "type"],
+  props: ["properties", "path", "type", "parent"],
   data() {
     return {
       result: {},
@@ -98,7 +98,10 @@ export default {
     save() {
       this.result.type = this.type;
       console.log("save", this.result);
-      this.$store.dispatch("solid_data/crudSave", this.result);
+      this.$store.dispatch("solid_data/crudSave", {
+        parent: this.parent,
+        thing: this.result,
+      });
     },
   },
   watch: {

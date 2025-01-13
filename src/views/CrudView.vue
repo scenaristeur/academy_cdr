@@ -6,7 +6,12 @@
     <hr />
     type {{ type }}
     <h1>{{ schema.name }} CRUD</h1>
-    <CrudForm :properties="schema.properties" :path="path" :type="type" />
+    <CrudForm
+      :properties="schema.properties"
+      :path="path"
+      :type="type"
+      :parent="parent"
+    />
 
     <hr />
     <CrudList :things="things" :type="type" :properties="schema.properties" />
@@ -20,7 +25,7 @@ import CrudList from "./CrudList.vue";
 
 export default {
   name: "CrudView",
-  props: ["type", "path", "schema", "things"],
+  props: ["type", "path", "schema", "things", "parent"],
   components: {
     CrudForm,
     CrudList,

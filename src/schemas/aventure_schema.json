@@ -31,13 +31,6 @@
       "items": {
         "type": "string"
       }
-    },
-    "choix": {
-      "type": "array",
-      "classe": "choix",
-      "items": {
-        "type": "choix"
-      }
     }
   }
 }
