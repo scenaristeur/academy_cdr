@@ -78,9 +78,9 @@
                     {{ option }}
                   </option>
                 </select> -->
-                <div v-else>
+                <!-- <div v-else>
                   Not implemented yet for type {{ property.type }} key {{ key }}
-                </div>
+                </div> -->
               </div>
             </div>
           </div>

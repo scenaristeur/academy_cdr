@@ -16,7 +16,8 @@
       "type": "string"
     },
     "start": {
-      "type": "string"
+      "type": "select",
+      "classe": "page"
     },
     "author": {
       "type": "string"

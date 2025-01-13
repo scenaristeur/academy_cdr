@@ -2,7 +2,10 @@
   <div class="page" v-if="config != null" ref="page">
     <h1>{{ config.name }}</h1>
     <p v-if="page == 0">{{ config.description }}</p>
+    <p>{{ config.start }}</p>
+    <p>{{ config.page }}</p>
     page : {{ page }}, level {{ level }}
+
     <div v-if="page_data != undefined">
       <h2>{{ page_data.title }}</h2>
       <hr />
@@ -95,7 +98,7 @@ export default {
       return this.$store.state.config.level;
     },
     page_data() {
-      return this.$store.state.config.config.pages[this.page];
+      return this.$store.state.config.config.page[this.page];
     },
   },
 };
