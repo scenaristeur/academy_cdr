@@ -17,6 +17,7 @@
             class="btn btn-primary btn-sm"
             @click.stop="sub({ key: key, thing: thing })"
           >
+            {{ thing.content[key] ? Object.keys(thing.content[key]).length : 0 }}
             {{ key }}
           </button>
         </span>

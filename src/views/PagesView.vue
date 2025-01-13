@@ -12,7 +12,7 @@
       :path="pod.aventureStore"
       :schema="page_schema"
       :things="things"
-      :parent="aventure"
+      :parent="parent"
     />
   </div>
 </template>
@@ -34,7 +34,7 @@ export default {
     pod() {
       return this.$store.state.solid_data.pod;
     },
-    aventure() {
+    parent() {
       return this.$store.state.solid_data.currentThing.aventure;
     },
     things() {
