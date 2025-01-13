@@ -1,11 +1,15 @@
 <template>
   <div>
-    <hr />
     <a :href="path" target="_blank" rel="noopener">données</a>
 
     <hr />
-    type {{ type }}
-    <h1>{{ schema.name }} CRUD</h1>
+    Crud {{ type }}
+    <span v-if="parent != null"
+      >pour
+      <a :href="parent.url" target="_blank" rel="noopener">{{
+        parent.content.name
+      }}</a></span
+    >
     <CrudForm
       :properties="schema.properties"
       :path="path"
@@ -14,7 +18,12 @@
     />
 
     <hr />
-    <CrudList :things="things" :type="type" :properties="schema.properties" />
+    <CrudList
+      :things="things"
+      :type="type"
+      :properties="schema.properties"
+      :parent="parent"
+    />
     <!-- {{ aventure }} -->
   </div>
 </template>

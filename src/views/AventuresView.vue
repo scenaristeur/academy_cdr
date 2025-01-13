@@ -1,9 +1,6 @@
 <template>
   <div>
     <SolidLogin />
-
-    Aventures CRUD
-
     <CrudView
       v-if="pod != null"
       type="aventure"

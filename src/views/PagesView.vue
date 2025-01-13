@@ -1,10 +1,10 @@
 <template>
   <div>
     pages
-
+    <!--
     {{ aventure }}
     <hr />
-    {{ page_schema }}
+    {{ page_schema }} -->
 
     <CrudView
       v-if="pod != null"

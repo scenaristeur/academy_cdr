@@ -78,6 +78,9 @@ const actions = {
       console.log('saving', thing, parent)
       // let filename = data.url.replace(context.state.pod.aventureStore, '')
       // console.log(filename)
+      if (parent != null) {
+        thing.parent = parent.url
+      }
       const savedFile = await overwriteFile(
         thing.url,
         new File([JSON.stringify(thing, null, 2)], thing.name, { type: 'application/json' }),
@@ -87,6 +90,19 @@ const actions = {
       console.log(savedFile)
       context.dispatch('crudReadContainer', { path: thing.path, type: thing.type })
       alert('Saved ' + thing.url)
+
+      if (parent != null) {
+        console.log('update parent', parent.url)
+        if (parent.content[thing.type] == undefined) {
+          parent.content[thing.type] = {}
+        }
+        parent.content[thing.type][thing.url] = {
+          url: thing.url,
+          mtime: Date.now(),
+          active: true,
+        }
+        context.dispatch('crudSave', { parent: null, thing: parent.content })
+      }
     } catch (e) {
       console.log(e)
       alert(e)
@@ -127,7 +143,7 @@ const actions = {
       }
 
       context.commit('setThings', { things: type_state, type: data.type })
-      console.log(type_state)
+      // console.log(type_state)
     } catch (e) {
       console.log(e)
     }
@@ -165,15 +181,27 @@ const actions = {
   },
 
   async deleteThing(context, thing) {
-    console.log(thing)
+    console.log('delte', thing)
     try {
+      if (thing.content.parent != null) {
+        const file = await getFile(
+          thing.content.parent, // File in Pod to Read
+          { fetch: sc.fetch }, // fetch from authenticated session
+        )
+        // console.log(file)
+        let text = await file.text()
+        // console.log(text)
+        let parent_content = JSON.parse(text)
+        delete parent_content[thing.content.type][thing.url]
+        context.dispatch('crudSave', { parent: parent_content.parent, thing: parent_content })
+      }
+
       await deleteFile(thing.url, { fetch: sc.fetch })
-      delete context.state[context.state.type][thing.url]
+      delete context.state[thing.content.type][thing.url]
+      context.dispatch('crudReadContainer', { path: thing.content.path, type: thing.content.type })
     } catch (e) {
       console.log(e)
     }
-
-    context.dispatch('crudReadContainer', { path: context.state.path, type: context.state.type })
   },
 }
 

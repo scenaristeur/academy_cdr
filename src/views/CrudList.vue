@@ -1,25 +1,28 @@
 <template>
   <div class="list-group">
-    <button
-      v-for="thing in things"
-      v-bind:key="thing.url"
-      v-on:click="select(thing)"
-      type="button"
-      class="list-group-item list-group-item-action list-group-item-primary"
-    >
-      {{ thing.content.name }}
+    <div v-for="thing in things" v-bind:key="thing.url">
+      <!-- v-if="parent == null || thing.parent == parent.url" -->
+      <button
+        v-if="parent == null || thing.content.parent == parent.url"
+        v-bind:key="thing.url"
+        v-on:click="select(thing)"
+        type="button"
+        class="list-group-item list-group-item-action list-group-item-primary"
+      >
+        {{ thing.content.name }}
 
-      <span v-for="(property, key) in properties" v-bind:key="key">
-        <button
-          v-if="property.type === 'array'"
-          class="btn btn-primary btn-sm"
-          @click.stop="sub({ key: key, thing: thing })"
-        >
-          {{ key }}
-        </button>
-      </span>
-      <button class="btn btn-danger btn-sm" @click.stop="supprime(thing)">X</button>
-    </button>
+        <span v-for="(property, key) in properties" v-bind:key="key">
+          <button
+            v-if="property.type === 'array'"
+            class="btn btn-primary btn-sm"
+            @click.stop="sub({ key: key, thing: thing })"
+          >
+            {{ key }}
+          </button>
+        </span>
+        <button class="btn btn-danger btn-sm" @click.stop="supprime(thing)">X</button>
+      </button>
+    </div>
   </div>
 </template>
 
@@ -27,7 +30,7 @@
 import * as bootstrap from "bootstrap";
 export default {
   name: "CrudList",
-  props: ["things", "type", "properties"],
+  props: ["things", "type", "properties", "parent"],
   methods: {
     sub({ key, thing }) {
       this.setCurrent(thing);
