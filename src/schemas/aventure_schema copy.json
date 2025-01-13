@@ -1,0 +1,43 @@
+{
+  "name": "Aventure",
+  "version": "1.0.0",
+  "type": "object",
+  "properties": {
+    "url": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "style": {
+      "type": "string"
+    },
+    "start": {
+      "type": "string"
+    },
+    "author": {
+      "type": "string"
+    },
+    "version": {
+      "type": "string",
+      "default": "1.0.0"
+    },
+    "pages": {
+      "type": "array",
+      "class": "page",
+      "items": {
+        "type": "string"
+      }
+    },
+    "choix": {
+      "type": "array",
+      "class": "choix",
+      "items": {
+        "type": "choix"
+      }
+    }
+  }
+}

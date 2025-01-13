@@ -25,20 +25,25 @@ export default {
   props: ["things", "type", "properties"],
   methods: {
     pages(thing) {
+      this.setCurrent();
       console.log("pages", thing);
     },
     choix(thing) {
+      this.setCurrent();
       console.log("choix", thing);
     },
     supprime(thing) {
       let confirme = confirm("Supprimer " + thing.url + " ?");
       if (confirme) {
         this.$store.dispatch("solid_data/deleteThing", thing);
+        this.thing = null;
+        this.setCurrent();
       }
     },
     select(thing) {
+      this.thing = thing;
       // this.$emit("select", url);
-      this.$store.commit("solid_data/setCurrentThing", thing);
+      this.setCurrent();
       const myModal = new bootstrap.Modal(
         "#" + this.type + "Modal" // " + type + 'Modal'"
         //  {
@@ -48,6 +53,12 @@ export default {
 
       // const modalToggle = document.getElementById("toggleMyModal");
       myModal.show();
+    },
+    setCurrent() {
+      this.$store.commit("solid_data/setCurrentThing", {
+        type: this.type,
+        thing: this.thing,
+      });
     },
   },
 };

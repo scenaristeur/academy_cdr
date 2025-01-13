@@ -51,7 +51,7 @@ const LOCAL_STORAGE_KEY_LAST_AVENTURE = 'academy_editor_last_aventure'
 const state = () => ({
   aventures_path: 'public/cdr_academie/',
   pod: null,
-  currentThing: null,
+  currentThing: {},
   aventure: null,
   path: null,
   type: null,
@@ -62,8 +62,9 @@ const mutations = {
     console.log('pod', p)
     state.pod = p
   },
-  setCurrentThing(state, c) {
-    state.currentThing = c
+  setCurrentThing(state, { type, thing }) {
+    state.currentThing[type] = thing
+    console.log('currentThing', state.currentThing)
   },
   async setThings(state, { things, type }) {
     state[type] = things

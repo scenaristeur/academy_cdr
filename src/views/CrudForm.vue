@@ -85,7 +85,7 @@ export default {
   },
   methods: {
     resetThing() {
-      this.$store.commit("solid_data/setCurrentThing", null);
+      this.$store.commit("solid_data/setCurrentThing", { type: this.type, thing: null });
       this.result = {};
       this.result.path = this.path + this.type + "/";
       this.result.url = this.result.path + uuidv4() + ".json";
@@ -103,6 +103,7 @@ export default {
   },
   watch: {
     currentThing() {
+      console.log("currentThing for modal", this.currentThing);
       if (this.currentThing != null) {
         this.result = this.currentThing.content;
       }
@@ -110,7 +111,7 @@ export default {
   },
   computed: {
     currentThing() {
-      return this.$store.state.solid_data.currentThing;
+      return this.$store.state.solid_data.currentThing[this.type];
     },
   },
 };
