@@ -91,8 +91,8 @@ const actions = {
       context.dispatch('crudReadContainer', { path: thing.path, type: thing.type })
       alert('Saved ' + thing.url)
 
-      if (parent != null) {
-        console.log('update parent', parent.url)
+      if (parent != undefined && parent != null) {
+        console.log('update parent', parent, parent.url)
         if (parent.content[thing.type] == undefined) {
           parent.content[thing.type] = {}
         }

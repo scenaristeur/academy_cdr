@@ -50,6 +50,34 @@
                   :placeholder="key"
                   v-model="result[key]"
                 ></textarea>
+                <!-- type select-->
+                <div v-else-if="property.type === 'select'">
+                  <!-- {{ $store.state.solid_data[property.classe] }} -->
+                  <select
+                    class="form-control"
+                    :id="key"
+                    v-model="result[key]"
+                    @change="onSelected"
+                  >
+                    <option
+                      v-for="option in $store.state.solid_data[property.classe]"
+                      v-bind:key="option.url"
+                      v-bind:value="option.url"
+                    >
+                      {{ option.content.name }}
+                    </option>
+                  </select>
+                </div>
+                <!-- <select
+                  v-else-if="property.type === 'select'"
+                  class="form-control"
+                  :id="key"
+                  v-model="result[key]"
+                >
+                  <option v-for="option in property.options" v-bind:key="option">
+                    {{ option }}
+                  </option>
+                </select> -->
                 <div v-else>
                   Not implemented yet for type {{ property.type }} key {{ key }}
                 </div>
@@ -78,6 +106,7 @@ export default {
   data() {
     return {
       result: {},
+      selected: "",
     };
   },
   mounted() {
@@ -94,6 +123,9 @@ export default {
           this.result[property] = this.properties[property].default;
         }
       }
+    },
+    onSelected() {
+      console.log("selected", this.selected);
     },
     save() {
       this.result.type = this.type;
@@ -116,6 +148,9 @@ export default {
     currentThing() {
       return this.$store.state.solid_data.currentThing[this.type];
     },
+    // options() {
+    //   return this.$store.state.solid_data.state[];
+    // },
   },
 };
 </script>
