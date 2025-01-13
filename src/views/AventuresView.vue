@@ -9,6 +9,7 @@
       type="aventure"
       :path="pod.aventureStore"
       :schema="aventure_schema"
+      :things="things"
     />
   </div>
 </template>
@@ -16,47 +17,16 @@
 <script>
 import SolidLogin from "@/components/SolidLogin.vue";
 import CrudView from "./CrudView.vue";
+import aventure_schema from "@/schemas/aventure_schema.json";
+
+console.log("aventure_schema raw", aventure_schema);
+// console.log("aventure_schema", aventure_schema);
 
 export default {
   name: "AventuresView",
   data() {
     return {
-      aventure_schema: {
-        name: "Aventure",
-        version: "1.0.0",
-        type: "object",
-        properties: {
-          url: {
-            type: "string",
-          },
-          name: {
-            type: "string",
-          },
-          description: {
-            type: "textarea",
-          },
-          style: {
-            type: "string",
-          },
-          start: {
-            type: "string",
-          },
-          author: {
-            type: "string",
-          },
-          version: {
-            type: "string",
-            default: "1.0.0",
-          },
-          pages: {
-            type: "array",
-            classe: "page",
-            items: {
-              type: "string",
-            },
-          },
-        },
-      },
+      aventure_schema: aventure_schema,
     };
   },
   components: {
@@ -91,6 +61,10 @@ export default {
     },
     session() {
       return this.$store.state.solid.session;
+    },
+
+    things() {
+      return this.$store.state.solid_data.aventure;
     },
   },
 };

@@ -10,6 +10,9 @@
       {{ thing.content.name }}
       <button class="btn btn-primary btn-sm" @click.stop="pages(thing)">pages</button>
       <button class="btn btn-primary btn-sm" @click.stop="choix(thing)">choix</button>
+      <div v-for="(property, key) in properties" v-bind:key="key">
+        <div v-if="property.type === 'array'">{{ key }} : {{ property }}</div>
+      </div>
       <button class="btn btn-danger btn-sm" @click.stop="supprime(thing)">X</button>
     </button>
   </div>
@@ -19,7 +22,7 @@
 import * as bootstrap from "bootstrap";
 export default {
   name: "CrudList",
-  props: ["things", "type"],
+  props: ["things", "type", "properties"],
   methods: {
     pages(thing) {
       console.log("pages", thing);

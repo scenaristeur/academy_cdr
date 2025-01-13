@@ -1,16 +1,15 @@
 <template>
   <div>
     <hr />
-    <a :href="path" target="_blank" rel="noopener">{{ path }}</a>
+    <a :href="path" target="_blank" rel="noopener">données</a>
 
     <hr />
     type {{ type }}
     <h1>{{ schema.name }} CRUD</h1>
     <CrudForm :properties="schema.properties" :path="path" :type="type" />
-    READ: LIST, DEtail, Update CREATE NEW, = UPDATE with NULL DELETE
 
     <hr />
-    <CrudList :things="aventure" :type="type" />
+    <CrudList :things="things" :type="type" :properties="schema.properties" />
     <!-- {{ aventure }} -->
   </div>
 </template>
@@ -21,7 +20,7 @@ import CrudList from "./CrudList.vue";
 
 export default {
   name: "CrudView",
-  props: ["type", "path", "schema"],
+  props: ["type", "path", "schema", "things"],
   components: {
     CrudForm,
     CrudList,
@@ -35,11 +34,6 @@ export default {
         path: this.path + this.type + "/",
         type: this.type,
       });
-    },
-  },
-  computed: {
-    aventure() {
-      return this.$store.state.solid_data.aventure;
     },
   },
 };
