@@ -25,25 +25,25 @@ export default {
   props: ["things", "type", "properties"],
   methods: {
     pages(thing) {
-      this.setCurrent();
+      this.setCurrent(thing);
       console.log("pages", thing);
+      this.$router.push({ name: "pages" });
     },
     choix(thing) {
-      this.setCurrent();
+      this.setCurrent(thing);
       console.log("choix", thing);
+      this.$router.push({ name: "choix" });
     },
     supprime(thing) {
       let confirme = confirm("Supprimer " + thing.url + " ?");
       if (confirme) {
         this.$store.dispatch("solid_data/deleteThing", thing);
-        this.thing = null;
-        this.setCurrent();
+        this.setCurrent(null);
       }
     },
     select(thing) {
-      this.thing = thing;
       // this.$emit("select", url);
-      this.setCurrent();
+      this.setCurrent(thing);
       const myModal = new bootstrap.Modal(
         "#" + this.type + "Modal" // " + type + 'Modal'"
         //  {
@@ -54,7 +54,8 @@ export default {
       // const modalToggle = document.getElementById("toggleMyModal");
       myModal.show();
     },
-    setCurrent() {
+    setCurrent(thing) {
+      this.thing = thing;
       this.$store.commit("solid_data/setCurrentThing", {
         type: this.type,
         thing: this.thing,

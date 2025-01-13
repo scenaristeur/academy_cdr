@@ -1,6 +1,6 @@
 <template>
   <div>
-    pages
+    choix
 
     {{ aventure }}
   </div>
@@ -8,7 +8,7 @@
 
 <script>
 export default {
-  name: "PagesView",
+  name: "ChoixView",
   computed: {
     aventure() {
       return this.$store.state.solid_data.currentThing.aventure;
