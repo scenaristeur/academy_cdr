@@ -49,6 +49,7 @@ export default {
     choose(a) {
       console.log(a);
       this.$store.commit("config/setConfig", a.content);
+      this.$store.commit("config/setPage", a.content.start);
     },
   },
 

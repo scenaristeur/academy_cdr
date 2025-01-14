@@ -55,6 +55,7 @@ const state = () => ({
   aventure: null,
   path: null,
   type: null,
+  page_content: null
 })
 
 const mutations = {
@@ -66,9 +67,12 @@ const mutations = {
     state.currentThing[type] = thing
     console.log('currentThing', state.currentThing)
   },
-  async setThings(state, { things, type }) {
+  setThings(state, { things, type }) {
     state[type] = things
     console.log(state)
+  },
+  setPageContent(state, p) {
+    state.page_content = p
   },
 }
 
@@ -203,6 +207,31 @@ const actions = {
       console.log(e)
     }
   },
+  async getPageContent(context, page_url) {
+    console.log("page", page_url)
+    const file = await getFile(
+      page_url, // File in Pod to Read
+      { fetch: sc.fetch }, // fetch from authenticated session
+    )
+    // console.log(file)
+    let text = await file.text()
+    // console.log(text)
+    let page_content = JSON.parse(text)
+    console.log(page_content)
+    context.commit('setPageContent', page_content)
+  },
+  async getChoice(context, choice_url) {
+    console.log("page", choice_url)
+    const file = await getFile(
+      choice_url, // File in Pod to Read
+      { fetch: sc.fetch }, // fetch from authenticated session
+    )
+    // console.log(file)
+    let text = await file.text()
+    // console.log(text)
+    let page_content = JSON.parse(text)
+    return page_content
+  }
 }
 
 export default {

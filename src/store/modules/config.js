@@ -13,6 +13,7 @@ const state = () => ({
   history: {},
   page: 0,
   level: 0,
+
 })
 
 const mutations = {
@@ -20,18 +21,18 @@ const mutations = {
     state.config = c
   },
   setPage(state, p) {
-    console.log(state.config.id)
+    // console.log(state.config.id)
 
-    state.history[state.config.id].pages.push(p)
-    console.log(state.history)
+    // state.history[state.config.id].pages.push(p)
+    // console.log(state.history)
     state.page = p
   },
   setLevel(state, l) {
     state.level = l
   },
   goBack(state) {
-    state.history[state.config.id].pages.slice(-2)[0]
-    this.commit('config/setPage', state.history[state.config.id].pages.slice(-2)[0])
+    // state.history[state.config.id].pages.slice(-2)[0]
+    // this.commit('config/setPage', state.history[state.config.id].pages.slice(-2)[0])
   },
 }
 
